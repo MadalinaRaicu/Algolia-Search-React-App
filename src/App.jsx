@@ -1,5 +1,5 @@
 import algoliasearch from "algoliasearch/lite";
-import React, { Component } from "react";
+import React from "react";
 import {
   InstantSearch,
   Hits,
@@ -18,10 +18,21 @@ const searchClient = algoliasearch(
   "aadef574be1f9252bb48d4ea09b5cfe5"
 );
 
-function App() {
+const App = () => {
   return (
     <div className="ais-InstantSearch">
-      <h1>React InstantSearch e-commerce demo</h1>
+      <header className="header">
+        <h1 className="header-title">
+          <a href="/">algolia-cuisine</a>
+        </h1>
+        <p className="header-subtitle">
+          using{" "}
+          <a href="https://github.com/algolia/react-instantsearch">
+            React InstantSearch
+          </a>
+        </p>
+      </header>
+
       <InstantSearch indexName="demo_ecommerce" searchClient={searchClient}>
         <div className="left-panel">
           <ClearRefinements />
@@ -37,9 +48,9 @@ function App() {
       </InstantSearch>
     </div>
   );
-}
+};
 
-function Hit(props) {
+const Hit = (props) => {
   return (
     <div>
       <img src={props.hit.image} align="left" alt={props.hit.name} />
@@ -52,7 +63,7 @@ function Hit(props) {
       <div className="hit-price">${props.hit.price}</div>
     </div>
   );
-}
+};
 
 Hit.propTypes = {
   hit: PropTypes.object.isRequired,
