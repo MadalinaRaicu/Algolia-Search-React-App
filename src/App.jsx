@@ -13,9 +13,11 @@ import {
 import PropTypes from "prop-types";
 import "./App.css";
 
+const indexName = "restaurants";
+
 const searchClient = algoliasearch(
-  "B1G2GM9NG0",
-  "aadef574be1f9252bb48d4ea09b5cfe5"
+  "8AUYHE8FKH",
+  "407a9d7a00f702944e275c8f802d5d37"
 );
 
 const App = () => {
@@ -23,21 +25,15 @@ const App = () => {
     <div className="ais-InstantSearch">
       <header className="header">
         <h1 className="header-title">
-          <a href="/">algolia-cuisine</a>
+          <a href="/">Algolia Cuisine</a>
         </h1>
-        <p className="header-subtitle">
-          using{" "}
-          <a href="https://github.com/algolia/react-instantsearch">
-            React InstantSearch
-          </a>
-        </p>
       </header>
 
-      <InstantSearch indexName="demo_ecommerce" searchClient={searchClient}>
+      <InstantSearch indexName={indexName} searchClient={searchClient}>
         <div className="left-panel">
           <ClearRefinements />
-          <h2>Brands</h2>
-          <RefinementList attribute="brand" />
+          <h2>Food Type</h2>
+          <RefinementList attribute="food_type" />
           <Configure hitsPerPage={8} />
         </div>
         <div className="right-panel">
@@ -53,14 +49,15 @@ const App = () => {
 const Hit = (props) => {
   return (
     <div>
-      <img src={props.hit.image} align="left" alt={props.hit.name} />
+      <img src={props.hit.image_url} align="left" alt={props.hit.name} />
       <div className="hit-name">
         <Highlight attribute="name" hit={props.hit} />
       </div>
       <div className="hit-description">
-        <Highlight attribute="description" hit={props.hit} />
+        <Highlight attribute="price_range" hit={props.hit} />
       </div>
-      <div className="hit-price">${props.hit.price}</div>
+      <div className="hit-food-type">{props.hit.food_type}</div>
+      <div className="hit-description">{props.hit.city}</div>
     </div>
   );
 };
