@@ -1,5 +1,5 @@
 import algoliasearch from "algoliasearch/lite";
-import React from "react";
+import React, { useState } from "react";
 import {
   InstantSearch,
   Hits,
@@ -12,6 +12,7 @@ import {
 } from "react-instantsearch-dom";
 import PropTypes from "prop-types";
 import "./App.css";
+import Popup from "./popup/Popup";
 
 const indexName = "restaurants";
 
@@ -21,6 +22,18 @@ const searchClient = algoliasearch(
 );
 
 const App = () => {
+  let [isOpen, setIsOpen] = useState(false);
+
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+    console.log(isOpen);
+  };
+
+  const closePopup = () => {
+    setIsOpen(false);
+    console.log(isOpen);
+  };
+
   return (
     <div className="ais-InstantSearch">
       <header className="header">
@@ -31,8 +44,15 @@ const App = () => {
 
       <InstantSearch indexName={indexName} searchClient={searchClient}>
         <div className="left-panel">
+          <button
+            className="ais-ClearRefinements-button"
+            type="button"
+            onClick={togglePopup}
+          >
+            <i className="fa fa-plus" aria-hidden="true"></i> Add Restaurant
+          </button>
           <ClearRefinements />
-          <h2>Food Type</h2>
+          <h2>Type of Cuisine</h2>
           <RefinementList attribute="food_type" />
           <Configure hitsPerPage={8} />
         </div>
@@ -42,6 +62,25 @@ const App = () => {
           <Pagination />
         </div>
       </InstantSearch>
+
+      {isOpen && (
+        <Popup
+          content={
+            <>
+              <b>Design your Popup</b>
+              <p>Lorem ipsum dolor</p>
+              <button
+                className="ais-ClearRefinements-button"
+                type="button"
+                onClick={closePopup}
+              >
+                Close Popup
+              </button>
+            </>
+          }
+          handleClose={closePopup}
+        />
+      )}
     </div>
   );
 };
@@ -58,6 +97,13 @@ const Hit = (props) => {
       </div>
       <div className="hit-food-type">{props.hit.food_type}</div>
       <div className="hit-description">{props.hit.city}</div>
+      <button
+        className="ais-ClearRefinements-button"
+        type="button"
+        onClick={remove}
+      >
+        Remove
+      </button>
     </div>
   );
 };
