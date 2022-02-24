@@ -21,6 +21,8 @@ const searchClient = algoliasearch(
   "407a9d7a00f702944e275c8f802d5d37"
 );
 
+const index = searchClient.initIndex(indexName);
+
 const App = () => {
   let [isOpen, setIsOpen] = useState(false);
 
@@ -49,7 +51,7 @@ const App = () => {
             type="button"
             onClick={togglePopup}
           >
-            <i className="fa fa-plus" aria-hidden="true"></i> Add Restaurant
+            Add Restaurant
           </button>
           <ClearRefinements />
           <h2>Type of Cuisine</h2>
@@ -76,6 +78,13 @@ const App = () => {
               >
                 Close Popup
               </button>
+              <button
+                className="ais-ClearRefinements-button"
+                type="button"
+                onClick={addRestaurant}
+              >
+                Add Restaurant
+              </button>
             </>
           }
           handleClose={closePopup}
@@ -100,13 +109,19 @@ const Hit = (props) => {
       <button
         className="ais-ClearRefinements-button"
         type="button"
-        onClick={remove}
+        onClick={removeRestaurant(props.hit.objectID)}
       >
         Remove
       </button>
     </div>
   );
 };
+
+const removeRestaurant = (id) => {
+  // index.deleteObject(id);
+};
+
+const addRestaurant = () => {};
 
 Hit.propTypes = {
   hit: PropTypes.object.isRequired,
