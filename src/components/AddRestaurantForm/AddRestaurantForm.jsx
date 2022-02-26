@@ -24,8 +24,7 @@ export const AddRestaurantForm = (props) => {
   };
 
   const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const { name, value } = event.target;
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
@@ -38,7 +37,7 @@ export const AddRestaurantForm = (props) => {
 
   return (
     <form className="input-form" onSubmit={handleSubmit}>
-      <p>
+      <span>
         <label>
           Restaurant name:
           <input
@@ -49,20 +48,20 @@ export const AddRestaurantForm = (props) => {
             onChange={handleChange}
           />
         </label>
-      </p>
-      <p>
+      </span>
+      <span>
         <label>
           Price range:
           <input
             className="input-text"
-            type="text"
+            type="number"
             name="price_range"
             value={inputs.price_range || ""}
             onChange={handleChange}
           />
         </label>
-      </p>
-      <p>
+      </span>
+      <span>
         <label>
           City:
           <input
@@ -73,7 +72,7 @@ export const AddRestaurantForm = (props) => {
             onChange={handleChange}
           />
         </label>
-      </p>
+      </span>
       <input className="submit-button" type="submit" />
     </form>
   );
