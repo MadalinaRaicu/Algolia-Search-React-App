@@ -12,39 +12,32 @@ import {
 } from "react-instantsearch-dom";
 import PropTypes from "prop-types";
 import "./App.css";
-import Popup from "./popup/Popup";
+import Popup from "./components/Popup/Popup";
 
-const indexName = "restaurants";
+const INDEX_NAME = "restaurants";
 
-const searchClient = algoliasearch(
-  "8AUYHE8FKH",
-  "407a9d7a00f702944e275c8f802d5d37"
-);
+const client = algoliasearch("8AUYHE8FKH", "407a9d7a00f702944e275c8f802d5d37");
 
-const index = searchClient.initIndex(indexName);
+const index = client.initIndex(INDEX_NAME);
 
 const App = () => {
   let [isOpen, setIsOpen] = useState(false);
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
-    console.log(isOpen);
   };
 
   const closePopup = () => {
     setIsOpen(false);
-    console.log(isOpen);
   };
 
   return (
-    <div className="ais-InstantSearch">
+    <div className="page">
       <header className="header">
-        <h1 className="header-title">
-          <a href="/">Algolia Cuisine</a>
-        </h1>
+        <h1 className="header-title">Algolia Cuisine</h1>
       </header>
 
-      <InstantSearch indexName={indexName} searchClient={searchClient}>
+      <InstantSearch indexName={INDEX_NAME} searchClient={client}>
         <div className="left-panel">
           <button
             className="ais-ClearRefinements-button"
@@ -104,7 +97,7 @@ const Hit = (props) => {
       <div className="hit-description">
         <Highlight attribute="price_range" hit={props.hit} />
       </div>
-      <div className="hit-food-type">{props.hit.food_type}</div>
+      <div>{props.hit.food_type}</div>
       <div className="hit-description">{props.hit.city}</div>
       <button
         className="ais-ClearRefinements-button"
