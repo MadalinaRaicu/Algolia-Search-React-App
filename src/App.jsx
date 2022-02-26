@@ -1,18 +1,19 @@
-import algoliasearch from "algoliasearch/lite";
+import algoliasearch from "algoliasearch";
 import React, { useState } from "react";
 import {
   InstantSearch,
   Hits,
   SearchBox,
   Pagination,
-  Highlight,
   ClearRefinements,
   RefinementList,
   Configure,
+  Highlight,
 } from "react-instantsearch-dom";
 import PropTypes from "prop-types";
 import "./App.css";
 import Popup from "./components/Popup/Popup";
+import { AddRestaurantForm } from "./components/AddRestaurantForm/AddRestaurantForm";
 
 const INDEX_NAME = "restaurants";
 
@@ -62,22 +63,14 @@ const App = () => {
         <Popup
           content={
             <>
-              <b>Design your Popup</b>
-              <p>Lorem ipsum dolor</p>
+              <b>Add a restaurant</b>
+              <p>Write down the restaurant details</p>
+              <AddRestaurantForm index={index} closePopup={closePopup} />
               <button
-                className="ais-ClearRefinements-button"
+                className="close-icon"
                 type="button"
                 onClick={closePopup}
-              >
-                Close Popup
-              </button>
-              <button
-                className="ais-ClearRefinements-button"
-                type="button"
-                onClick={addRestaurant}
-              >
-                Add Restaurant
-              </button>
+              ></button>
             </>
           }
           handleClose={closePopup}
@@ -102,7 +95,9 @@ const Hit = (props) => {
       <button
         className="ais-ClearRefinements-button"
         type="button"
-        onClick={removeRestaurant(props.hit.objectID)}
+        onClick={(e) => {
+          handleRemoveRestaurantClick(e, props.hit.objectID);
+        }}
       >
         Remove
       </button>
@@ -110,11 +105,17 @@ const Hit = (props) => {
   );
 };
 
-const removeRestaurant = (id) => {
-  // index.deleteObject(id);
+const handleRemoveRestaurantClick = (e, id) => {
+  e.preventDefault();
+  removeRestaurant(id);
 };
 
-const addRestaurant = () => {};
+const removeRestaurant = (id) => {
+  index.deleteObject(id).then(() => {
+    console.log("Restaurant deleted.", id);
+    alert(`Restaurant ${id} deleted.`);
+  });
+};
 
 Hit.propTypes = {
   hit: PropTypes.object.isRequired,
