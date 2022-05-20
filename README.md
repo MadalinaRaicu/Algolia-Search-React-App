@@ -1,4 +1,4 @@
-# Getting Started with Create React App to build Algolia Cuisine 
+# Getting Started with Create React App to build Algolia Search 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 This project was used with [create-instantsearch-app](https://github.com/algolia/create-instantsearch-app) by [Algolia](https://algolia.com).
